@@ -1,0 +1,6 @@
+{
+  "name": "Ray CHAN - 個人簡歷",
+  "description": "具備互動式導覽、視覺化技能圖表、經歷時序與精美作品展示的現代化個人動態履歷",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

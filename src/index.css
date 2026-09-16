@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  header, nav, footer, #hero button, .print\:hidden {
+    display: none !important;
+  }
+  @page {
+    margin: 1.5cm;
+    size: A4 portrait;
+  }
+}
