@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserProfile, ContactMessage } from '../types';
+import { UserProfile } from '../types';
 import { Mail, Phone, MapPin, Send, Check, Copy, Clock, MessageSquare, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface ContactSectionProps {
@@ -20,7 +20,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [submittedInquiries, setSubmittedInquiries] = useState<ContactMessage[]>([]);
 
   useEffect(() => {
     const updateClock = () => {
@@ -39,10 +38,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleCopy = (text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
+  const handleCopy = async (text: string, field: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch {
+      setErrorMessage('目前無法自動複製，請直接選取文字複製。');
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,51 +64,38 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const newMsg: ContactMessage = {
-        id: `msg-${Date.now()}`,
-        name: formData.name,
-        email: formData.email,
-        topic: formData.topic,
-        message: formData.message,
-        date: new Date().toLocaleString('zh-TW'),
-      };
+    const subject = `[履歷網站] ${formData.topic}｜${formData.name}`;
+    const body = [
+      `姓名：${formData.name}`,
+      `Email：${formData.email}`,
+      `洽談主題：${formData.topic}`,
+      '',
+      formData.message,
+    ].join('\n');
 
-      setSubmittedInquiries((prev) => [newMsg, ...prev]);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        topic: '專案架構顧問',
-        message: '',
-      });
-    }, 800);
+    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setIsSubmitting(false);
+    setSubmitSuccess(true);
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 border-b border-slate-200/80 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-1.5 font-mono">
-            05 / Get In Touch
+    <section id="contact" className="section-shell dark">
+      <div className="section-inner">
+        <div className="section-header">
+          <div>
+            <div className="section-kicker">05 / Get In Touch</div>
+            <h2 className="section-heading">聯絡方式與合作洽詢</h2>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            聯絡方式與合作洽詢
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 mt-2">
+          <p className="section-subtitle">
             歡迎任何架構顧問、全職技術領導邀請、演講交流或潛在專案合作提案。
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
-          {/* Left Column: Direct Contact Details & Status */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Quick Cards */}
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900">
-                直接聯繫方式 (Direct Reach)
+            <div className="p-6 rounded-[1.6rem] bg-white/4 border border-white/10 space-y-5">
+              <h3 className="text-sm font-bold uppercase tracking-[0.16em] mono-font text-[11px] text-white">
+                直接聯繫方式
               </h3>
 
               {/* Email */}
@@ -206,8 +196,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                 <MessageSquare className="w-4 h-4 text-indigo-600" />
                 <span>發送合作訊息 (Send a Message)</span>
               </h3>
-              <p className="text-xs text-slate-500 mb-6">
-                填寫下方表單將訊息寄送給我，我將儘速與您聯繫。
+                <p className="text-xs text-slate-500 mb-6">
+                填寫後會開啟你的預設郵件程式，確認內容後即可寄出。
               </p>
 
               {submitSuccess ? (
@@ -215,13 +205,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                   <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h4 className="text-base font-bold text-emerald-900">訊息已成功送出！</h4>
+                  <h4 className="text-base font-bold text-emerald-900">郵件草稿已建立</h4>
                   <p className="text-xs text-emerald-700 leading-relaxed max-w-md mx-auto">
-                    感謝您的來信。我已收到您的訊息，會盡快評估並透過您留下的 Email 提供回覆。
+                    已嘗試開啟預設郵件程式。請確認收件人、主旨與內容後按下寄出；若沒有開啟，請直接寄信至 {profile.email}。
                   </p>
                   <button
                     onClick={() => setSubmitSuccess(false)}
-                    className="mt-3 px-4 py-1.5 text-xs font-semibold bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors cursor-pointer"
+                    className="action-btn mt-3 px-4 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
                   >
                     發送另一則訊息
                   </button>
@@ -295,7 +285,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-xs hover:shadow transition-all inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="action-btn w-full sm:w-auto px-6 py-2.5 font-semibold rounded-lg shadow-xs hover:shadow transition-all inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <span>傳送中...</span>
@@ -309,25 +299,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                 </form>
               )}
 
-              {/* Submitted Inquiries Drawer (Feedback log) */}
-              {submittedInquiries.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-slate-200">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                    本工作階段已送出訊息記錄 ({submittedInquiries.length})
-                  </h4>
-                  <div className="space-y-2">
-                    {submittedInquiries.map((inq) => (
-                      <div key={inq.id} className="p-3 bg-white rounded-lg border border-slate-200 text-xs">
-                        <div className="flex justify-between items-baseline mb-1">
-                          <span className="font-bold text-slate-800">{inq.name} ({inq.topic})</span>
-                          <span className="text-[10px] text-slate-400 font-mono">{inq.date}</span>
-                        </div>
-                        <p className="text-slate-600 text-[11px] line-clamp-1">{inq.message}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

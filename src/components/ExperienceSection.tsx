@@ -52,29 +52,20 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
   };
 
   return (
-    <section id="experience" className="py-16 md:py-24 border-b border-slate-200/80 bg-slate-50/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        {/* Header & Filter Controls */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <section id="experience" className="section-shell light">
+      <div className="section-inner">
+        <div className="section-header">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-1.5 font-mono">
-              02 / Chronology & Career
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              學經歷時序
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 mt-2">
-              完整梳理歷年專業任職、專案交付成果、學術學位與權威認證。
-            </p>
+            <div className="section-kicker">02 / Chronology & Career</div>
+            <h2 className="section-heading">學經歷時序</h2>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200 shadow-2xs self-start md:self-auto">
+          <div className="flex items-center gap-1.5 p-1 bg-white/70 rounded-full border border-slate-200 shadow-[0_8px_20px_rgba(23,20,17,0.04)] self-start md:self-auto">
             <button
               onClick={() => setFilterType('all')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] rounded-full transition-colors cursor-pointer ${
                 filterType === 'all'
-                  ? 'bg-indigo-600 text-white shadow-2xs'
+                  ? 'bg-[#171411] text-[#f4efe9] shadow-2xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
@@ -82,9 +73,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
             </button>
             <button
               onClick={() => setFilterType('work')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] rounded-full transition-colors cursor-pointer ${
                 filterType === 'work'
-                  ? 'bg-indigo-600 text-white shadow-2xs'
+                  ? 'bg-[#171411] text-[#f4efe9] shadow-2xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
@@ -92,9 +83,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
             </button>
             <button
               onClick={() => setFilterType('education')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] rounded-full transition-colors cursor-pointer ${
                 filterType === 'education'
-                  ? 'bg-indigo-600 text-white shadow-2xs'
+                  ? 'bg-[#171411] text-[#f4efe9] shadow-2xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
@@ -102,9 +93,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
             </button>
             <button
               onClick={() => setFilterType('award')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] rounded-full transition-colors cursor-pointer ${
                 filterType === 'award'
-                  ? 'bg-indigo-600 text-white shadow-2xs'
+                  ? 'bg-[#171411] text-[#f4efe9] shadow-2xs'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
@@ -113,24 +104,21 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
           </div>
         </div>
 
-        {/* Timeline Flow */}
-        <div className="relative pl-6 sm:pl-8 border-l-2 border-slate-200 space-y-8 ml-2 sm:ml-4">
+        <div className="relative pl-6 sm:pl-8 border-l border-dashed border-slate-300 space-y-8 ml-2 sm:ml-4">
           {filteredExperiences.map((item) => {
             const isExpanded = expandedIds[item.id] !== false;
 
             return (
               <div key={item.id} className="relative group">
-                {/* Timeline node icon */}
-                <div className="absolute -left-[35px] sm:-left-[43px] top-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border-2 border-indigo-600 shadow-sm flex items-center justify-center">
+                <div className="absolute -left-[35px] sm:-left-[43px] top-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#171411] border-2 border-[#d88943] shadow-sm flex items-center justify-center text-[#f4efe9]">
                   {getBadgeIcon(item.type)}
                 </div>
 
-                {/* Card */}
-                <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-2xs hover:border-slate-300 transition-all">
+                <div className="bg-white/80 rounded-[1.5rem] p-5 sm:p-7 border border-slate-200/90 shadow-[0_12px_28px_rgba(20,17,13,0.04)] hover:border-slate-300 transition-all">
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4">
                     <div>
                       <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 bg-slate-100 px-2 py-0.5 rounded mono-font">
                           {getTypeLabel(item.type)}
                         </span>
                         {item.current && (
@@ -143,16 +131,15 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                         )}
                       </div>
 
-                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                      <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug display-font text-[clamp(1.1rem,1rem+0.8vw,2.1rem)] tracking-[-0.06em]">
                         {item.role}
                       </h3>
 
-                      <div className="text-sm font-semibold text-indigo-600 mt-0.5">
+                      <div className="text-sm font-semibold text-[#2d2a28] mt-0.5">
                         {item.organization}
                       </div>
                     </div>
 
-                    {/* Metadata & Actions */}
                     <div className="flex flex-wrap sm:flex-col items-start sm:items-end gap-1.5 text-xs text-slate-500">
                       <div className="flex items-center gap-1 font-mono font-medium text-slate-600">
                         <Calendar className="w-3.5 h-3.5 text-slate-400" />
@@ -165,17 +152,15 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                     </div>
                   </div>
 
-                  {/* Summary */}
                   <p className="mt-3 text-sm text-slate-600 leading-relaxed">
                     {item.summary}
                   </p>
 
-                  {/* Expandable Achievements Details */}
                   {item.achievements.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-slate-100">
+                    <div className="mt-4 pt-3 border-t border-dashed border-slate-200">
                       <button
                         onClick={() => toggleExpand(item.id)}
-                        className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-indigo-600 transition-colors mb-2.5 cursor-pointer"
+                        className="flex items-center gap-1.5 text-[10px] mono-font uppercase tracking-[0.12em] text-slate-700 hover:text-slate-900 transition-colors mb-2.5 cursor-pointer"
                       >
                         <span>關鍵成果與量化成效 ({item.achievements.length} 項)</span>
                         {isExpanded ? (
@@ -198,9 +183,8 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                     </div>
                   )}
 
-                  {/* Tech stack badges */}
                   {item.skills && item.skills.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-1.5">
+                    <div className="mt-4 pt-3 border-t border-dashed border-slate-200 flex flex-wrap items-center gap-1.5">
                       <span className="text-[11px] font-mono text-slate-400 mr-1">使用技術:</span>
                       {item.skills.map((skill, idx) => (
                         <span

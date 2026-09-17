@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ProjectItem } from '../types';
 import { X, ExternalLink, Github, CheckCircle2, AlertCircle, ArrowUpRight } from 'lucide-react';
 
@@ -8,14 +8,24 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    if (!project) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
       }
     };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    requestAnimationFrame(() => dialogRef.current?.focus());
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [onClose]);
 
   if (!project) return null;
@@ -31,7 +41,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       <div
         role="dialog"
         aria-modal="true"
-        className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-200"
+        aria-labelledby="project-modal-title"
+        tabIndex={-1}
+        ref={dialogRef}
+        className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-200 focus:outline-none"
       >
         {/* Header with image */}
         <div className="relative h-48 sm:h-64 w-full bg-slate-900 overflow-hidden shrink-0">
@@ -59,7 +72,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               </span>
               <span className="text-xs text-slate-300 font-mono">{project.period}</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+            <h3 id="project-modal-title" className="text-xl sm:text-2xl font-bold text-white leading-tight">
               {project.title}
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 line-clamp-1">
@@ -147,7 +160,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 href={project.demoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs rounded-lg transition-colors shadow-xs"
+                className="action-btn inline-flex items-center gap-1.5 px-4 py-2 font-medium text-xs rounded-lg transition-colors shadow-xs"
               >
                 <span>即時展示 Demo</span>
                 <ExternalLink className="w-3.5 h-3.5" />

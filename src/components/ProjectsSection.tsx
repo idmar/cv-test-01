@@ -25,31 +25,22 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
   });
 
   return (
-    <section id="projects" className="py-16 md:py-24 border-b border-slate-200/80 bg-slate-50/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        {/* Header and Category Tabs */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <section id="projects" className="section-shell light">
+      <div className="section-inner">
+        <div className="section-header">
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-1.5 font-mono">
-              04 / Portfolio & Deliverables
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              代表專案作品
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 mt-2">
-              聚焦於高併發交易、即時協作視覺化、企業級 AI 應用與現代架構之落地成果。
-            </p>
+            <div className="section-kicker">04 / Portfolio & Deliverables</div>
+            <h2 className="section-heading">代表專案作品</h2>
           </div>
 
-          {/* Categories Tab Bar */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200 shadow-2xs self-start md:self-auto">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white/70 rounded-full border border-slate-200 shadow-[0_8px_20px_rgba(23,20,17,0.04)] self-start md:self-auto">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+                className={`px-3 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] rounded-full transition-colors cursor-pointer ${
                   selectedCategory === cat.id
-                    ? 'bg-indigo-600 text-white shadow-2xs'
+                    ? 'bg-[#171411] text-[#f4efe9] shadow-2xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
@@ -59,15 +50,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           </div>
         </div>
 
-        {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between"
+              className="group bg-white/80 rounded-[1.6rem] border border-slate-200 overflow-hidden shadow-[0_18px_34px_rgba(20,17,13,0.05)] hover:shadow-[0_20px_40px_rgba(20,17,13,0.08)] hover:border-slate-300 transition-all flex flex-col justify-between"
             >
               <div>
-                {/* Image Banner */}
                 <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                   <img
                     src={project.image}
@@ -77,7 +66,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-slate-900/60 via-transparent to-transparent" />
 
-                  {/* Badges */}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-xs text-slate-800 px-2.5 py-0.5 rounded shadow-xs">
                       {project.categoryLabel}
@@ -95,9 +83,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   </div>
                 </div>
 
-                {/* Card Content */}
                 <div className="p-5 sm:p-6 space-y-3">
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug">
+                  <h3 className="text-lg font-black text-slate-900 group-hover:text-[var(--orange)] transition-colors leading-snug display-font text-[clamp(1.1rem,0.9rem+0.7vw,1.8rem)] tracking-[-0.06em]">
                     {project.title}
                   </h3>
 
@@ -109,7 +96,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     {project.summary}
                   </p>
 
-                  {/* Quick Metric Badge */}
                   {project.metrics && project.metrics.length > 0 && (
                     <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100 text-xs text-slate-700 flex items-start gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
@@ -119,7 +105,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     </div>
                   )}
 
-                  {/* Tech stack badges */}
                   <div className="flex flex-wrap gap-1 pt-1">
                     {project.technologies.slice(0, 4).map((tech, i) => (
                       <span
@@ -138,11 +123,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 </div>
               </div>
 
-              {/* Card Footer Actions */}
-              <div className="px-5 sm:px-6 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <div className="px-5 sm:px-6 pb-5 pt-3 border-t border-dashed border-slate-200 flex items-center justify-between">
                 <button
                   onClick={() => setActiveModalProject(project)}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-700 cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[10px] mono-font uppercase tracking-[0.12em] text-[#171411] hover:text-[var(--orange)] cursor-pointer"
                 >
                   <span>查看架構詳情</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -177,7 +161,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           ))}
         </div>
 
-        {/* Modal for Project Detail */}
         {activeModalProject && (
           <ProjectModal
             project={activeModalProject}

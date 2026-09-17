@@ -15,15 +15,16 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
   };
 
   return (
-    <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800">
+    <footer className="bg-[#0f0d0b] text-stone-300 py-12 border-t border-white/10 text-xs relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-px bg-[var(--coffee)]/70" />
+      <div className="max-w-[1848px] mx-auto px-4 sm:px-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
           <div>
-            <div className="text-white font-bold text-base">{profile.name} ({profile.nameEn})</div>
-            <div className="text-slate-400 text-xs mt-0.5">{profile.title}</div>
+            <div className="text-white display-font text-lg tracking-[-0.08em] uppercase">{profile.name} ({profile.nameEn})</div>
+            <div className="text-stone-300 mono-font uppercase tracking-[0.12em] mt-1 text-[10px]">{profile.title}</div>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex items-center gap-4 text-stone-400">
             <a
               href={profile.github}
               target="_blank"
@@ -52,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
 
             <button
               onClick={scrollToTop}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors cursor-pointer text-xs ml-2"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-stone-200 transition-colors cursor-pointer text-[10px] mono-font uppercase tracking-[0.12em]"
             >
               <span>回頂端</span>
               <ArrowUp className="w-3.5 h-3.5" />
@@ -60,13 +61,19 @@ export const Footer: React.FC<FooterProps> = ({ profile }) => {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-          <p>© {new Date().getFullYear()} {profile.nameEn}. 著作者版權所有。保留一切權利。</p>
-          <p className="flex items-center gap-2">
-            <span>Powered by React 19 & Tailwind CSS</span>
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+          <p className="mono-font uppercase tracking-[0.12em]">© {new Date().getFullYear()} {profile.nameEn}. All rights reserved.</p>
+          <p className="flex items-center gap-2 mono-font uppercase tracking-[0.08em]">
+            <span>React 19</span>
             <span>•</span>
-            <span>RWD 跨裝置響應式設計</span>
+            <span>Tailwind CSS</span>
           </p>
+        </div>
+
+        <div className="mt-8 border-t border-white/10 pt-6">
+          <div className="display-font text-[clamp(3.3rem,6vw,12.5rem)] leading-[0.8] tracking-[-0.08em] text-stone-100/85 uppercase">
+            2024 — 2025
+          </div>
         </div>
       </div>
     </footer>

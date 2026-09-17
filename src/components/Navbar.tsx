@@ -73,9 +73,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="sticky top-0 z-40 w-full transition-all duration-200">
       {/* Scroll Reading Progress Bar */}
-      <div className="w-full bg-slate-200/40 h-0.5 relative">
+      <div className="w-full bg-white/10 h-0.5 relative">
         <div
-          className="h-full bg-indigo-600 transition-all duration-150 ease-out"
+          className="h-full bg-[var(--coffee)] transition-all duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -84,25 +84,25 @@ export const Navbar: React.FC<NavbarProps> = ({
         id="main-navbar"
         className={`w-full px-4 sm:px-8 transition-colors duration-200 ${
           isScrolled
-            ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 py-3'
-            : 'bg-white/60 backdrop-blur-sm border-b border-slate-200/40 py-4'
+            ? 'bg-[#12110f]/90 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.18)] border-b border-white/10 py-3'
+            : 'bg-[#12110f]/80 backdrop-blur-sm border-b border-white/10 py-4'
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-[1848px] mx-auto flex items-center justify-between gap-4">
           {/* Brand / Logo */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
             >
-              <div className="w-9 h-9 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-sm group-hover:bg-indigo-700 transition-colors">
+              <div className="w-9 h-9 rounded-lg bg-[var(--coffee)] text-[#171411] font-black flex items-center justify-center text-sm shadow-sm group-hover:brightness-110 transition-colors display-font">
                 {currentProfile.name.slice(0, 1)}
               </div>
               <div>
-                <div className="text-sm font-bold text-slate-900 leading-tight group-hover:text-indigo-600 transition-colors">
+                <div className="text-sm font-bold text-white leading-tight group-hover:text-[var(--coffee-soft)] transition-colors display-font tracking-[-0.08em]">
                   {currentProfile.name}
                 </div>
-                <div className="text-[11px] text-slate-500 font-mono leading-tight">
+                <div className="text-[11px] text-stone-300 mono-font leading-tight uppercase tracking-[0.08em]">
                   {currentProfile.nameEn} • {currentProfile.yearsOfExp} YOE
                 </div>
               </div>
@@ -112,12 +112,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="relative ml-2 hidden md:block">
               <button
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-full border border-slate-200 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] text-stone-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-full border border-white/10 transition-colors cursor-pointer mono-font uppercase tracking-[0.12em]"
                 title="切換不同職缺模板履歷"
               >
-                <UserCheck className="w-3 h-3 text-slate-500" />
+                <UserCheck className="w-3 h-3 text-[var(--coffee-soft)]" />
                 <span className="max-w-[110px] truncate">{currentProfile.title.split('&')[0]}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
+                <ChevronDown className="w-3 h-3 text-stone-400" />
               </button>
 
               {profileDropdownOpen && (
@@ -157,17 +157,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1 rounded-full border border-slate-200/60">
+          <div className="hidden lg:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/10">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`px-3.5 py-1.5 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer ${
+                  className={`px-3.5 py-1.5 text-[10px] mono-font uppercase tracking-[0.14em] rounded-full transition-all duration-200 cursor-pointer ${
                     isActive
-                      ? 'bg-white text-indigo-700 shadow-xs font-semibold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                      ? 'bg-white text-[#171411] shadow-xs font-semibold'
+                      : 'text-stone-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {item.label}
@@ -180,16 +180,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden sm:flex items-center gap-2">
             <button
               onClick={onOpenEditor}
-              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] text-stone-200 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors cursor-pointer"
               title="編輯或修改當前履歷資訊"
             >
-              <Edit3 className="w-3.5 h-3.5 text-slate-500" />
+              <Edit3 className="w-3.5 h-3.5 text-[var(--coffee-soft)]" />
               <span>自訂編輯</span>
             </button>
 
             <button
               onClick={onOpenPrint}
-              className="inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-xs transition-colors cursor-pointer"
+              className="action-btn inline-flex items-center gap-1 px-3.5 py-1.5 text-[10px] mono-font uppercase tracking-[0.12em] rounded-full shadow-xs transition-colors cursor-pointer"
               title="列印為紙本履歷或儲存為 PDF"
             >
               <Printer className="w-3.5 h-3.5" />
@@ -201,24 +201,34 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex sm:hidden items-center gap-1.5">
             <button
               onClick={onOpenPrint}
-              className="p-2 text-slate-600 hover:text-slate-900 rounded-lg border border-slate-200"
+              className="p-2 text-stone-200 hover:text-white rounded-full border border-white/10 bg-white/5"
               title="匯出"
             >
               <Printer className="w-4 h-4" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-slate-900 rounded-lg border border-slate-200 bg-slate-50 focus:outline-none"
+              className="p-2 text-stone-200 hover:text-white rounded-full border border-white/10 bg-white/5 focus:outline-none"
               aria-label="開啟導覽選單"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <span className={`dot-menu ${mobileMenuOpen ? 'is-open' : ''}`}>
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
+              </span>
             </button>
           </div>
         </div>
 
         {/* Mobile Dropdown Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden pt-4 pb-3 border-t border-slate-200/80 mt-3 animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="lg:hidden pt-4 pb-3 border-t border-white/10 mt-3 animate-in fade-in slide-in-from-top-2 duration-150">
             <div className="flex flex-col gap-1 mb-4">
               {navItems.map((item) => (
                 <button
@@ -226,8 +236,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => scrollToSection(item.id)}
                   className={`text-left px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                     activeSection === item.id
-                      ? 'bg-indigo-50 text-indigo-700 font-semibold'
-                      : 'text-slate-700 hover:bg-slate-100'
+                      ? 'bg-white text-[#171411] font-semibold'
+                      : 'text-stone-200 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   {item.label}
@@ -235,8 +245,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               ))}
             </div>
 
-            <div className="pt-3 border-t border-slate-200 flex flex-col gap-2">
-              <div className="text-[11px] font-medium text-slate-400 px-1">切換範例檔案</div>
+            <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+              <div className="text-[11px] font-medium text-stone-400 px-1">切換範例檔案</div>
               <div className="grid grid-cols-2 gap-1.5">
                 {PROFILES.map((p) => (
                   <button
@@ -247,8 +257,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }}
                     className={`text-left px-2.5 py-1.5 rounded-lg text-xs border ${
                       p.id === currentProfile.id
-                        ? 'border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold'
-                        : 'border-slate-200 text-slate-700'
+                        ? 'border-[var(--color-red)] bg-[var(--color-red)] text-white font-semibold'
+                        : 'border-white/10 text-stone-200 hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     {p.name}
@@ -262,7 +272,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenEditor();
                   }}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 text-xs font-medium text-slate-700 bg-slate-100 rounded-lg"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 text-xs font-medium text-stone-200 bg-white/10 border border-white/10 rounded-lg hover:bg-white/15"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                   自訂資料
@@ -272,7 +282,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setMobileMenuOpen(false);
                     onOpenPrint();
                   }}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-white bg-slate-900 rounded-lg"
+                  className="action-btn flex-1 inline-flex items-center justify-center gap-1.5 py-2 text-xs font-semibold rounded-lg"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   列印 / PDF

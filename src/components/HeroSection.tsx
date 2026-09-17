@@ -9,11 +9,17 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenPrint }) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState(false);
 
-  const handleCopy = (text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
+  const handleCopy = async (text: string, field: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyError(false);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch {
+      setCopyError(true);
+    }
   };
 
   const scrollToSection = (id: string) => {
@@ -77,7 +83,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenPrint }
             <div className="mt-8 flex flex-wrap items-center gap-3.5">
               <button
                 onClick={() => scrollToSection('contact')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm rounded-lg shadow-sm hover:shadow transition-all cursor-pointer"
+                className="action-btn inline-flex items-center gap-2 px-5 py-2.5 font-medium text-sm rounded-lg shadow-sm hover:shadow transition-all cursor-pointer"
               >
                 <span>聯絡我 / 洽談合作</span>
                 <ChevronRight className="w-4 h-4" />
@@ -169,6 +175,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenPrint }
                 )}
               </div>
             </div>
+            {copyError && (
+              <p className="mt-2 text-[11px] text-slate-500">目前無法自動複製，請直接選取 Email 或電話文字複製。</p>
+            )}
           </div>
 
           {/* Right Column: Key Stats Card Grid */}

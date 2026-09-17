@@ -68,7 +68,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
+    <div className="site-shell">
       {/* Sticky Top Navigation with Reading Progress */}
       <Navbar
         currentProfile={profile}
@@ -78,7 +78,7 @@ export default function App() {
       />
 
       {/* Main Content Sections */}
-      <main className="flex-1">
+      <main className="site-main">
         {/* 1. Hero & Quick Stats */}
         <HeroSection
           profile={profile}

@@ -29,23 +29,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
   };
 
   return (
-    <section id="about" className="py-16 md:py-24 border-b border-slate-200/80 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <div className="text-xs font-bold uppercase tracking-wider text-indigo-600 mb-1.5 font-mono">
-            01 / Profile & Philosophy
+    <section id="about" className="section-shell light">
+      <div className="section-inner">
+        <div className="section-header">
+          <div>
+            <div className="section-kicker">01 / Profile & Philosophy</div>
+            <h2 className="section-heading">關於我與專業堅持</h2>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            關於我與專業堅持
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+          <p className="section-subtitle">
             深入了解我的工程研發背景、架構哲學與跨職能協作準則。
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* Main Narrative & Values */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed">
               {profile.about.map((paragraph, idx) => (
@@ -55,19 +51,18 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
               ))}
             </div>
 
-            {/* Core Values / Philosophy Cards */}
             <div className="pt-4">
-              <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <span>核心工作價值觀 (Core Working Values)</span>
+              <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2 uppercase tracking-[0.12em] mono-font text-[11px]">
+                <span>核心工作價值觀</span>
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {profile.values.map((v, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+                    className="p-4 rounded-2xl border border-slate-200 bg-white/60 hover:bg-white hover:border-slate-300 transition-colors"
                   >
                     <div className="flex items-center gap-2.5 mb-2">
-                      <div className="p-1.5 rounded-lg bg-white shadow-2xs border border-slate-100">
+                      <div className="p-1.5 rounded-lg bg-[#f4efe9] shadow-[0_10px_20px_rgba(23,20,17,0.05)] border border-slate-100">
                         {getIcon(v.iconName)}
                       </div>
                       <h4 className="text-sm font-bold text-slate-900">{v.title}</h4>
@@ -81,14 +76,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
             </div>
           </div>
 
-          {/* Right Column: Languages & Key Differentiators */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Languages card */}
-            <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50">
+            <div className="p-6 rounded-[1.5rem] border border-slate-200 bg-[#f3efe9]">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                  <Languages className="w-4 h-4 text-indigo-600" />
-                  <span>語言能力 (Language Proficiency)</span>
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm uppercase tracking-[0.12em] mono-font text-[11px]">
+                  <Languages className="w-4 h-4 text-[var(--orange)]" />
+                  <span>語言能力</span>
                 </div>
                 <span className="text-[11px] font-mono text-slate-500">CEFR / TOEIC</span>
               </div>
@@ -102,7 +95,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
                     </div>
                     <div className="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-indigo-600 rounded-full transition-all duration-500"
+                        className="h-full bg-[linear-gradient(90deg,#0d0d0b_0%,#d88943_100%)] rounded-full transition-all duration-500"
                         style={{ width: `${lang.percent}%` }}
                       />
                     </div>
@@ -111,11 +104,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ profile }) => {
               </div>
             </div>
 
-            {/* Engineering Highlights checklist */}
-            <div className="p-6 rounded-2xl border border-slate-200 bg-white">
-              <h4 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                <Award className="w-4 h-4 text-indigo-600" />
-                <span>工程實踐守則 (Engineering Practices)</span>
+            <div className="p-6 rounded-[1.5rem] border border-slate-200 bg-white">
+              <h4 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2 uppercase tracking-[0.12em] mono-font text-[11px]">
+                <Award className="w-4 h-4 text-[var(--orange)]" />
+                <span>工程實踐守則</span>
               </h4>
 
               <ul className="space-y-2.5 text-xs text-slate-600">

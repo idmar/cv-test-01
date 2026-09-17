@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { UserProfile } from '../types';
 import { X, Save, RotateCcw, Check, Sparkles } from 'lucide-react';
 import { PROFILES } from '../data/initialData';
@@ -20,6 +20,32 @@ export const ResumeEditorModal: React.FC<ResumeEditorModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<UserProfile>({ ...profile });
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({ ...profile });
+      setSavedSuccess(false);
+      requestAnimationFrame(() => dialogRef.current?.focus());
+    }
+  }, [isOpen, profile]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -47,12 +73,15 @@ export const ResumeEditorModal: React.FC<ResumeEditorModalProps> = ({
       <div
         role="dialog"
         aria-modal="true"
-        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-150"
+        aria-labelledby="resume-editor-title"
+        tabIndex={-1}
+        ref={dialogRef}
+        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-10 max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-150 focus:outline-none"
       >
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
           <div>
-            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <h3 id="resume-editor-title" className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-indigo-600" />
               <span>自訂即時編輯履歷資訊</span>
             </h3>
@@ -222,7 +251,7 @@ export const ResumeEditorModal: React.FC<ResumeEditorModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="inline-flex items-center gap-1.5 px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-xs transition-colors cursor-pointer text-xs"
+                className="action-btn inline-flex items-center gap-1.5 px-5 py-2 font-semibold rounded-lg shadow-xs transition-colors cursor-pointer text-xs"
               >
                 {savedSuccess ? (
                   <>
